@@ -2,6 +2,6 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": null,
   "installCommand": "echo sin dependencias",
-  "buildCommand": "rm -rf dist && mkdir -p dist && cp -r ETL-Inmobiliario/dashboard-web/. dist/",
+  "buildCommand": "bash build-web.sh",
   "outputDirectory": "dist"
 }
