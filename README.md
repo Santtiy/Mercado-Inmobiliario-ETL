@@ -93,8 +93,8 @@ Abrir <http://localhost:8000>.
 
 ### Desplegar en Vercel
 
-El archivo `vercel.json` de la raíz ya indica a Vercel que publique la carpeta
-`ETL-Inmobiliario/dashboard-web` sin instalar dependencias ni compilar.
+El archivo `vercel.json` de la raíz redirige las peticiones a la carpeta
+`ETL-Inmobiliario/dashboard-web`, y `.vercelignore` hace que solo se suba la web.
 
 1. Entrar a <https://vercel.com/new> e importar este repositorio de GitHub.
 2. Dejar **Root Directory** en `./` (la raíz del repositorio) y

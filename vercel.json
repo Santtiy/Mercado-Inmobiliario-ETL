@@ -1,7 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "framework": null,
-  "installCommand": "",
-  "buildCommand": "",
-  "outputDirectory": "ETL-Inmobiliario/dashboard-web"
+  "rewrites": [
+    { "source": "/", "destination": "/ETL-Inmobiliario/dashboard-web/index.html" },
+    { "source": "/:path*", "destination": "/ETL-Inmobiliario/dashboard-web/:path*" }
+  ]
 }

@@ -1,0 +1,6 @@
+# Solo se publica la web; el resto del proyecto no se sube a Vercel
+/*
+!/vercel.json
+!/ETL-Inmobiliario
+/ETL-Inmobiliario/*
+!/ETL-Inmobiliario/dashboard-web
