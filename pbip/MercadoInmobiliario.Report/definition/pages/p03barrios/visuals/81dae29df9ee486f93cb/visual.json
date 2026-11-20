@@ -1,0 +1,249 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "81dae29df9ee486f93cb",
+  "position": {
+    "x": 1120,
+    "y": 135,
+    "z": 8000,
+    "height": 925,
+    "width": 780,
+    "tabOrder": 8000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_ubicacion"
+                    }
+                  },
+                  "Property": "barrio"
+                }
+              },
+              "queryRef": "dim_ubicacion.barrio",
+              "nativeQueryRef": "barrio"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_ubicacion"
+                    }
+                  },
+                  "Property": "ciudad"
+                }
+              },
+              "queryRef": "dim_ubicacion.ciudad",
+              "nativeQueryRef": "ciudad"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "Ranking Barrio"
+                }
+              },
+              "queryRef": "_Medidas.Ranking Barrio",
+              "nativeQueryRef": "Ranking Barrio"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "Precio Promedio"
+                }
+              },
+              "queryRef": "_Medidas.Precio Promedio",
+              "nativeQueryRef": "Precio Promedio"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "Precio m2 Promedio"
+                }
+              },
+              "queryRef": "_Medidas.Precio m2 Promedio",
+              "nativeQueryRef": "Precio m2 Promedio"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "Cantidad Ventas"
+                }
+              },
+              "queryRef": "_Medidas.Cantidad Ventas",
+              "nativeQueryRef": "Cantidad Ventas"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "_Medidas"
+                  }
+                },
+                "Property": "Ranking Barrio"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Ranking de barrios'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "14D"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "8ed42a033b46b85d0000",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "dim_ubicacion"
+              }
+            },
+            "Property": "barrio"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "290064b77d4a02d3b5c7",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "dim_ubicacion"
+              }
+            },
+            "Property": "ciudad"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "b878ce096e940bbe0e30",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Medidas"
+              }
+            },
+            "Property": "Ranking Barrio"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "56564a50505b36b0cd4e",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Medidas"
+              }
+            },
+            "Property": "Precio Promedio"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "80d955f8e026230cbde5",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Medidas"
+              }
+            },
+            "Property": "Precio m2 Promedio"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "e5bb04071c8c035ebeb2",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Medidas"
+              }
+            },
+            "Property": "Cantidad Ventas"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

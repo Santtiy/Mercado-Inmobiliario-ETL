@@ -1,0 +1,299 @@
+table fact_ventas
+	lineageTag: d7f32422-c373-46a8-88aa-f35e99e07049
+
+	column id
+		dataType: string
+		lineageTag: b9f4e9d2-da22-4e28-8900-af5c3c1ec0f4
+		summarizeBy: none
+		sourceColumn: id
+
+		annotation SummarizationSetBy = Automatic
+
+	column date
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: 3dbfd328-bd09-4a30-a71e-d5ccaf11697b
+		summarizeBy: none
+		sourceColumn: date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column zipcode
+		dataType: string
+		isHidden
+		lineageTag: bd678dd0-a762-4c43-b200-aee653072c6b
+		summarizeBy: none
+		sourceColumn: zipcode
+
+		annotation SummarizationSetBy = Automatic
+
+	column id_vivienda
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 60ca7ee0-8aee-41f6-9a84-13e0ea6a2052
+		summarizeBy: none
+		sourceColumn: id_vivienda
+
+		annotation SummarizationSetBy = Automatic
+
+	column price
+		dataType: double
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: 74b9776b-6ecb-46a6-a101-9c3982880b98
+		summarizeBy: sum
+		sourceColumn: price
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column precio_m2
+		dataType: double
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: b5f2163a-5c0e-4065-aa05-ddaa9c0b6da6
+		summarizeBy: sum
+		sourceColumn: precio_m2
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column bedrooms
+		dataType: int64
+		formatString: 0
+		lineageTag: 0ddf7c36-6422-42ca-a586-8f9f1049741b
+		summarizeBy: none
+		sourceColumn: bedrooms
+
+		annotation SummarizationSetBy = Automatic
+
+	column bathrooms
+		dataType: double
+		lineageTag: 6bbd9957-65e9-4805-8d80-65681bb01f19
+		summarizeBy: sum
+		sourceColumn: bathrooms
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column sqft_living_m2
+		dataType: double
+		formatString: #,0.0
+		lineageTag: eee9c649-3830-44ff-bec7-bd4211dd4b8b
+		summarizeBy: sum
+		sourceColumn: sqft_living_m2
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column sqft_lot_m2
+		dataType: double
+		formatString: #,0.0
+		lineageTag: 34e90035-4ed4-4bed-ab11-fe2cbfe71e2e
+		summarizeBy: sum
+		sourceColumn: sqft_lot_m2
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column waterfront
+		dataType: int64
+		formatString: 0
+		lineageTag: 5f67afa8-1757-4ea1-9c9a-640fc97d6855
+		summarizeBy: none
+		sourceColumn: waterfront
+
+		annotation SummarizationSetBy = Automatic
+
+	column frente_agua
+		dataType: string
+		lineageTag: fca9aed4-6c74-4099-a5eb-41fc2446d7de
+		summarizeBy: none
+		sourceColumn: frente_agua
+
+		annotation SummarizationSetBy = Automatic
+
+	column view
+		dataType: int64
+		formatString: 0
+		lineageTag: 5b433027-9b79-4ec8-819a-2112e8f7412e
+		summarizeBy: none
+		sourceColumn: view
+
+		annotation SummarizationSetBy = Automatic
+
+	column condition
+		dataType: int64
+		formatString: 0
+		lineageTag: 8d6999c6-268a-4412-a95a-fff4213e65cb
+		summarizeBy: none
+		sourceColumn: condition
+
+		annotation SummarizationSetBy = Automatic
+
+	column grade
+		dataType: int64
+		formatString: 0
+		lineageTag: ef595be2-e3c3-41a0-9d0b-caed29ceee54
+		summarizeBy: none
+		sourceColumn: grade
+
+		annotation SummarizationSetBy = Automatic
+
+	column yr_built
+		dataType: int64
+		formatString: 0
+		lineageTag: 9c152795-38b4-499b-96ae-361b9ce8e0e8
+		summarizeBy: none
+		sourceColumn: yr_built
+
+		annotation SummarizationSetBy = Automatic
+
+	column decada_construccion
+		dataType: string
+		lineageTag: fb8e3c1f-a248-47a0-86b5-4fb34fbcd944
+		summarizeBy: none
+		sourceColumn: decada_construccion
+
+		annotation SummarizationSetBy = Automatic
+
+	column yr_renovated
+		dataType: int64
+		formatString: 0
+		lineageTag: 75871680-cf05-4280-9329-abbd4029ffac
+		summarizeBy: none
+		sourceColumn: yr_renovated
+
+		annotation SummarizationSetBy = Automatic
+
+	column renovada
+		dataType: int64
+		formatString: 0
+		lineageTag: 2836cc39-1302-4dce-a9af-ecc459608b30
+		summarizeBy: none
+		sourceColumn: renovada
+
+		annotation SummarizationSetBy = Automatic
+
+	column antiguedad
+		dataType: int64
+		formatString: 0
+		lineageTag: 1102d303-dbce-4868-94ec-76d6b7d93e45
+		summarizeBy: none
+		sourceColumn: antiguedad
+
+		annotation SummarizationSetBy = Automatic
+
+	column lat
+		dataType: double
+		lineageTag: b2491c42-b2e6-42f3-87c6-a7b02807dd88
+		dataCategory: Latitude
+		summarizeBy: none
+		sourceColumn: lat
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column long
+		dataType: double
+		lineageTag: 44d25490-32ed-482b-8206-ea8415983aff
+		dataCategory: Longitude
+		summarizeBy: none
+		sourceColumn: long
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column rango_precio
+		dataType: string
+		lineageTag: fffdc8ad-39ba-47f5-ac4c-85c392d1ed09
+		summarizeBy: none
+		sourceColumn: rango_precio
+
+		annotation SummarizationSetBy = Automatic
+
+	column grupo_banios
+		dataType: string
+		lineageTag: 4ba283f1-fd0c-44ab-a581-65162989ab11
+		summarizeBy: none
+		sourceColumn: grupo_banios
+		sortByColumn: 'Orden Banios'
+
+		annotation SummarizationSetBy = Automatic
+
+	column grupo_habitaciones
+		dataType: string
+		lineageTag: 4f804641-aaac-41e6-ba3f-62a79dcac2a0
+		summarizeBy: none
+		sourceColumn: grupo_habitaciones
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipo_vivienda
+		dataType: string
+		lineageTag: 05b8ec41-db2f-42f1-aa00-5d0bab370700
+		summarizeBy: none
+		sourceColumn: tipo_vivienda
+
+		annotation SummarizationSetBy = Automatic
+
+	column categoria_calidad
+		dataType: string
+		lineageTag: 6e9888a2-55e8-46ed-9c6a-355df49fff6c
+		summarizeBy: none
+		sourceColumn: categoria_calidad
+		sortByColumn: 'Orden Calidad'
+
+		annotation SummarizationSetBy = Automatic
+
+	column n_ventas
+		dataType: int64
+		formatString: 0
+		lineageTag: a15288b2-f4a7-4dcf-a7ee-a7085cca385d
+		summarizeBy: none
+		sourceColumn: n_ventas
+
+		annotation SummarizationSetBy = Automatic
+
+	column outlier_precio
+		dataType: int64
+		formatString: 0
+		lineageTag: 2a4636a9-b6cc-448c-a2ac-a70a8b4d7f52
+		summarizeBy: none
+		sourceColumn: outlier_precio
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Orden Banios' = SWITCH(TRUE(), fact_ventas[bathrooms] <= 1, 1, fact_ventas[bathrooms] <= 2, 2, fact_ventas[bathrooms] <= 3, 3, fact_ventas[bathrooms] <= 4, 4, 5)
+		isHidden
+		lineageTag: 3941bcc2-00aa-411f-83bf-ebc71e3889b1
+		summarizeBy: none
+
+	column 'Orden Calidad' = SWITCH(TRUE(), fact_ventas[grade] <= 6, 1, fact_ventas[grade] <= 8, 2, fact_ventas[grade] <= 10, 3, 4)
+		isHidden
+		lineageTag: 9f8deed0-0300-4da0-97ec-f03a335a236f
+		summarizeBy: none
+
+	partition fact_ventas = m
+		mode: import
+		source =
+				let
+				    Origen = Csv.Document(File.Contents(RutaSalida & "fact_ventas.csv"),[Delimiter=",", Columns=29, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    #"Usar la primera fila como encabezado" = Table.PromoteHeaders(Origen, [PromoteAllScalars=true]),
+				    #"Cambiar tipo" = Table.TransformColumnTypes(#"Usar la primera fila como encabezado",{{"id", type text}, {"date", type date}, {"zipcode", type text}, {"id_vivienda", Int64.Type}, {"price", type number}, {"precio_m2", type number}, {"bedrooms", Int64.Type}, {"bathrooms", type number}, {"sqft_living_m2", type number}, {"sqft_lot_m2", type number}, {"waterfront", Int64.Type}, {"frente_agua", type text}, {"view", Int64.Type}, {"condition", Int64.Type}, {"grade", Int64.Type}, {"yr_built", Int64.Type}, {"decada_construccion", type text}, {"yr_renovated", Int64.Type}, {"renovada", Int64.Type}, {"antiguedad", Int64.Type}, {"lat", type number}, {"long", type number}, {"rango_precio", type text}, {"grupo_banios", type text}, {"grupo_habitaciones", type text}, {"tipo_vivienda", type text}, {"categoria_calidad", type text}, {"n_ventas", Int64.Type}, {"outlier_precio", Int64.Type}}, "en-US")
+				in
+				    #"Cambiar tipo"
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Table
+

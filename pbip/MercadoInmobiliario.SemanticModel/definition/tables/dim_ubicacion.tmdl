@@ -1,0 +1,74 @@
+table dim_ubicacion
+	lineageTag: 2d484318-73f1-4d27-896d-0f0e09581778
+
+	column zipcode
+		dataType: string
+		lineageTag: d8918280-c597-41e0-88de-8b7bce2d202f
+		dataCategory: PostalCode
+		summarizeBy: none
+		sourceColumn: zipcode
+
+		annotation SummarizationSetBy = Automatic
+
+	column ciudad
+		dataType: string
+		lineageTag: 4fd849d9-9075-43cb-b876-4f29de7f9e37
+		dataCategory: City
+		summarizeBy: none
+		sourceColumn: ciudad
+
+		annotation SummarizationSetBy = Automatic
+
+	column barrio
+		dataType: string
+		lineageTag: e66d6ab6-27be-4007-a734-f0315a7c351b
+		summarizeBy: none
+		sourceColumn: barrio
+
+		annotation SummarizationSetBy = Automatic
+
+	column lat_promedio
+		dataType: double
+		lineageTag: a20f555a-d944-4e41-a690-0d6d60426c5d
+		dataCategory: Latitude
+		summarizeBy: none
+		sourceColumn: lat_promedio
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column long_promedio
+		dataType: double
+		lineageTag: 26f4643e-4832-4dc0-b35c-e679da547a63
+		dataCategory: Longitude
+		summarizeBy: none
+		sourceColumn: long_promedio
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column cantidad_ventas
+		dataType: int64
+		formatString: 0
+		lineageTag: 20f6eb44-7407-4dcd-887a-878d45a9d7d9
+		summarizeBy: sum
+		sourceColumn: cantidad_ventas
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_ubicacion = m
+		mode: import
+		source =
+				let
+				    Origen = Csv.Document(File.Contents(RutaSalida & "dim_ubicacion.csv"),[Delimiter=",", Columns=6, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    #"Usar la primera fila como encabezado" = Table.PromoteHeaders(Origen, [PromoteAllScalars=true]),
+				    #"Cambiar tipo" = Table.TransformColumnTypes(#"Usar la primera fila como encabezado",{{"zipcode", type text}, {"ciudad", type text}, {"barrio", type text}, {"lat_promedio", type number}, {"long_promedio", type number}, {"cantidad_ventas", Int64.Type}}, "en-US")
+				in
+				    #"Cambiar tipo"
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Table
+

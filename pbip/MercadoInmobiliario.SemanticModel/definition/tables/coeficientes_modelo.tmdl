@@ -1,0 +1,36 @@
+table coeficientes_modelo
+	lineageTag: 72670313-ad22-46c9-9eb6-af23ae51d6a4
+
+	column variable
+		dataType: string
+		lineageTag: 53af4ab0-32a7-4ef0-9eba-f862d3fbc1b5
+		summarizeBy: none
+		sourceColumn: variable
+
+		annotation SummarizationSetBy = Automatic
+
+	column coeficiente
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 2f842065-e1c1-477c-9188-d00e443b623d
+		summarizeBy: none
+		sourceColumn: coeficiente
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition coeficientes_modelo = m
+		mode: import
+		source =
+				let
+				    Origen = Csv.Document(File.Contents(RutaSalida & "coeficientes_modelo.csv"),[Delimiter=",", Columns=2, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    #"Usar la primera fila como encabezado" = Table.PromoteHeaders(Origen, [PromoteAllScalars=true]),
+				    #"Cambiar tipo" = Table.TransformColumnTypes(#"Usar la primera fila como encabezado",{{"variable", type text}, {"coeficiente", type number}}, "en-US")
+				in
+				    #"Cambiar tipo"
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Table
+

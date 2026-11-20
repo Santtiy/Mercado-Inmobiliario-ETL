@@ -1,0 +1,7 @@
+expression RutaSalida = "C:\Users\Santy\OneDrive\Desktop\Final-Herramientas-Mercado-Inmobiliario\ETL-Inmobiliario\salida\" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 6de1ec2d-6333-40a0-b74c-fdd4e77c8603
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Text
+

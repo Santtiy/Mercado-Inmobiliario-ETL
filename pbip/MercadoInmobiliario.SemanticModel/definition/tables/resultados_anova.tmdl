@@ -1,0 +1,108 @@
+table resultados_anova
+	lineageTag: 1968d67f-2f50-42d1-94f8-85a8d455011d
+
+	column factor
+		dataType: string
+		lineageTag: 1bc38974-40d7-4280-badf-da6dcd104a4e
+		summarizeBy: none
+		sourceColumn: factor
+
+		annotation SummarizationSetBy = Automatic
+
+	column n_grupos
+		dataType: int64
+		formatString: 0
+		lineageTag: 01b0a798-b280-4ec5-96a7-91db77188501
+		summarizeBy: none
+		sourceColumn: n_grupos
+
+		annotation SummarizationSetBy = Automatic
+
+	column F
+		dataType: double
+		formatString: #,0.0
+		lineageTag: 9be95991-ccb5-499d-a9b3-5afef1793b50
+		summarizeBy: none
+		sourceColumn: F
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column p_valor
+		dataType: double
+		formatString: 0.00E+00
+		lineageTag: 0b91aebe-5fdd-42ce-b61f-84f053952a40
+		summarizeBy: none
+		sourceColumn: p_valor
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column eta2
+		dataType: double
+		formatString: 0.000
+		lineageTag: 70151cc7-95ab-4fc0-894b-356304fdaa09
+		summarizeBy: none
+		sourceColumn: eta2
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column levene_p
+		dataType: double
+		formatString: 0.00E+00
+		lineageTag: 1f57b1ae-dddf-408a-8378-fff45a9c7601
+		summarizeBy: none
+		sourceColumn: levene_p
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column welch_p
+		dataType: double
+		formatString: 0.00E+00
+		lineageTag: 8ebdc56d-b504-4266-8263-e5416fd8db82
+		summarizeBy: none
+		sourceColumn: welch_p
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column kruskal_p
+		dataType: double
+		formatString: 0.00E+00
+		lineageTag: 3c397cf6-9341-43f1-a194-e0eb1438d8ca
+		summarizeBy: none
+		sourceColumn: kruskal_p
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column conclusion
+		dataType: string
+		lineageTag: 6131b1b4-c0a4-4758-9912-d9fb7e0e5349
+		summarizeBy: none
+		sourceColumn: conclusion
+
+		annotation SummarizationSetBy = Automatic
+
+	partition resultados_anova = m
+		mode: import
+		source =
+				let
+				    Origen = Csv.Document(File.Contents(RutaSalida & "resultados_anova.csv"),[Delimiter=",", Columns=9, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    #"Usar la primera fila como encabezado" = Table.PromoteHeaders(Origen, [PromoteAllScalars=true]),
+				    #"Cambiar tipo" = Table.TransformColumnTypes(#"Usar la primera fila como encabezado",{{"factor", type text}, {"n_grupos", Int64.Type}, {"F", type number}, {"p_valor", type number}, {"eta2", type number}, {"levene_p", type number}, {"welch_p", type number}, {"kruskal_p", type number}, {"conclusion", type text}}, "en-US")
+				in
+				    #"Cambiar tipo"
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Table
+

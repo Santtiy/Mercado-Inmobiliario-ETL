@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exploración del Mercado Inmobiliario: King County, Washington</title>
+  <meta name="description" content="Presentación interactiva del análisis del mercado inmobiliario de King County (2014-2015): ETL con PySpark, Power BI y ANOVA.">
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" defer></script>
+  <script src="script.js" defer></script>
+</head>
+<body>
+
+  <!-- ===================== Cabecera fija: menú + filtros ===================== -->
+  <header class="cabecera" id="cabecera">
+    <nav class="menu" aria-label="Navegación principal">
+      <a class="menu-marca" href="#inicio">King County <span>· Mercado inmobiliario</span></a>
+      <button class="menu-boton" id="menu-boton" type="button" aria-expanded="false" aria-controls="menu-enlaces">Menú</button>
+      <ul class="menu-enlaces" id="menu-enlaces">
+        <li><a href="#inicio" data-enlace="inicio">Inicio</a></li>
+        <li><a href="#indicadores" data-enlace="indicadores">Indicadores</a></li>
+        <li><a href="#req-3" data-enlace="analisis">Hallazgos</a></li>
+        <li><a href="#anova" data-enlace="anova">ANOVA</a></li>
+        <li><a href="#req-7" data-enlace="prediccion">Predicción</a></li>
+        <li><a href="#conclusiones" data-enlace="conclusiones">Conclusiones</a></li>
+        <li><a href="#powerbi" data-enlace="powerbi">Power BI</a></li>
+      </ul>
+    </nav>
+
+    <div class="barra-filtros" id="barra-filtros">
+      <div class="filtros-cabecera">
+        <button class="filtros-boton" id="filtros-boton" type="button" aria-expanded="false" aria-controls="filtros-campos">Filtros</button>
+        <p class="filtros-resumen" id="filtros-resumen" aria-live="polite">Cargando datos…</p>
+      </div>
+      <form class="filtros-campos" id="filtros-campos" onsubmit="return false">
+        <label>Año de venta
+          <select id="filtro-anio"><option value="">Todos</option></select>
+        </label>
+        <label>Ciudad
+          <select id="filtro-ciudad"><option value="">Todas</option></select>
+        </label>
+        <label>Rango de precio
+          <select id="filtro-rango"><option value="">Todos</option></select>
+        </label>
+        <label>Tipo de vivienda
+          <select id="filtro-tipo"><option value="">Todos</option></select>
+        </label>
+        <label>Frente al agua
+          <select id="filtro-agua"><option value="">Todos</option></select>
+        </label>
+        <button class="boton boton-secundario" id="limpiar-filtros" type="button">Limpiar filtros</button>
+      </form>
+    </div>
+  </header>
+
+  <main id="principal">
+    <div class="aviso-error" id="aviso-error" role="alert" hidden></div>
+
+    <!-- ===================== 1. Portada ===================== -->
+    <section class="seccion portada" id="inicio" data-menu="inicio" data-titulo="Portada">
+      <div class="contenedor">
+        <p class="portada-etiqueta">Proyecto final · Análisis de datos</p>
+        <h1>Exploración del Mercado Inmobiliario: <span>King County, Washington</span></h1>
+        <p class="portada-subtitulo">¿Qué determina el precio de una vivienda y dónde conviene comprar o invertir?</p>
+
+        <div class="portada-rejilla">
+          <div class="portada-bloque">
+            <h2>Dataset</h2>
+            <p id="portada-dataset">House Sales in King County (Kaggle).</p>
+          </div>
+          <div class="portada-bloque">
+            <h2>Objetivo</h2>
+            <p>Construir un sistema ETL con PySpark, un modelo de datos en Power BI con medidas DAX y una validación estadística con ANOVA.</p>
+          </div>
+        </div>
+
+        <ol class="flujo" aria-label="Flujo del proyecto">
+          <li>CSV</li>
+          <li>PySpark (ETL)</li>
+          <li>Modelo estrella</li>
+          <li>Power BI + web</li>
+          <li>ANOVA</li>
+        </ol>
+
+        <p class="pista-teclado">Usa las flechas <kbd>←</kbd> <kbd>→</kbd> del teclado para avanzar entre secciones.</p>
+      </div>
+    </section>
+
+    <!-- ===================== 2. Indicadores ===================== -->
+    <section class="seccion revelar" id="indicadores" data-menu="indicadores" data-titulo="Indicadores">
+      <div class="contenedor">
+        <header class="seccion-encabezado">
+          <p class="seccion-numero">Panorama general</p>
+          <h2>Indicadores clave</h2>
+          <p class="seccion-descripcion">Se recalculan con los filtros de la barra superior.</p>
+        </header>
+
+        <div class="kpi-rejilla">
+          <article class="kpi">
+            <h3>Valor total transado</h3>
+            <p class="kpi-valor" id="kpi-total">—</p>
+            <p class="kpi-detalle" id="kpi-total-detalle"></p>
+          </article>
+          <article class="kpi">
+            <h3>Número de ventas</h3>
+            <p class="kpi-valor" id="kpi-ventas">—</p>
+            <p class="kpi-detalle" id="kpi-ventas-detalle"></p>
+          </article>
+          <article class="kpi">
+            <h3>Precio promedio</h3>
+            <p class="kpi-valor" id="kpi-promedio">—</p>
+            <p class="kpi-detalle" id="kpi-mediana"></p>
+          </article>
+          <article class="kpi">
+            <h3>Precio por m²</h3>
+            <p class="kpi-valor" id="kpi-m2">—</p>
+            <p class="kpi-detalle" id="kpi-m2-detalle"></p>
+          </article>
+          <article class="kpi">
+            <h3>Prima por frente al agua</h3>
+            <p class="kpi-valor" id="kpi-prima">—</p>
+            <p class="kpi-detalle" id="kpi-prima-detalle"></p>
+          </article>
+          <article class="kpi">
+            <h3>Variación del precio por m²</h3>
+            <p class="kpi-valor" id="kpi-variacion">—</p>
+            <p class="kpi-detalle" id="kpi-variacion-detalle"></p>
+          </article>
+        </div>
+        <p class="nota" id="nota-mes-incompleto"></p>
+        <p class="mensaje-vacio">Sin datos para esta combinación de filtros.</p>
+      </div>
+    </section>
+
+    <!-- ===================== Requerimiento 3 ===================== -->
+    <section class="seccion revelar" id="req-3" data-menu="analisis" data-titulo="Requerimiento 3">
+      <div class="contenedor">
+        <header class="seccion-encabezado">
+          <p class="seccion-numero">Requerimiento 3 <span class="seccion-idea">Idea 1 · La ubicación lo cambia todo</span></p>
+          <h2>Mapa interactivo de precios</h2>
+        </header>
+        <figure class="tarjeta filtrable">
+          <figcaption>Ubicación de cada venta según su rango de precio <span class="etiqueta etiqueta-filtro">Responde a filtros</span></figcaption>
+          <div class="lienzo lienzo-mapa"><canvas id="grafico-mapa" aria-label="Mapa de dispersión de precios por longitud y latitud" role="img"></canvas></div>
+          <p class="frase" id="frase-mapa"></p>
+          <p class="nota">Cada punto es una venta (longitud en el eje X, latitud en el eje Y). Pasa el cursor para ver el barrio y el precio.</p>
+          <p class="mensaje-vacio">Sin datos para esta combinación.</p>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ===================== Requerimiento 4 ===================== -->
+    <section class="seccion revelar" id="req-4" data-menu="analisis" data-titulo="Requerimiento 4">
+      <div class="contenedor">
+        <header class="seccion-encabezado">
+          <p class="seccion-numero">Requerimiento 4 <span class="seccion-idea">Idea 1 · La ubicación lo cambia todo</span></p>
+          <h2>Top 10 barrios más costosos</h2>
+        </header>
+        <figure class="tarjeta filtrable">
+          <figcaption>Precio promedio por barrio <span class="etiqueta etiqueta-filtro">Responde a filtros</span></figcaption>
+          <div class="lienzo lienzo-alto"><canvas id="grafico-barrios" aria-label="Diez barrios con mayor precio promedio" role="img"></canvas></div>
+          <p class="frase" id="frase-barrios"></p>
+          <p class="nota">Los barrios son aproximados a partir del código postal.</p>
+          <p class="mensaje-vacio">Sin datos para esta combinación.</p>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ===================== Requerimiento 9 ===================== -->
+    <section class="seccion revelar" id="req-9" data-menu="analisis" data-titulo="Requerimiento 9">
+      <div class="contenedor">
+        <header class="seccion-encabezado">
+          <p class="seccion-numero">Requerimiento 9 <span class="seccion-idea">Idea 2 · El agua vale oro</span></p>
+          <h2>Viviendas con vista o frente al agua</h2>
+        </header>
+        <div class="rejilla-2">
+          <figure class="tarjeta filtrable">
+            <figcaption>Precio promedio con y sin frente al agua <span class="etiqueta etiqueta-filtro">Responde a filtros</span></figcaption>
+            <div class="lienzo"><canvas id="grafico-agua" aria-label="Precio promedio con y sin frente al agua" role="img"></canvas></div>
+            <p class="frase" id="frase-agua"></p>
+            <p class="mensaje-vacio">Sin datos para esta combinación.</p>
+          </figure>
+          <figure class="tarjeta filtrable">
+            <figcaption>Precio promedio según la calidad de la vista <span class="etiqueta etiqueta-filtro">Responde a filtros</span></figcaption>
+            <div class="lienzo"><canvas id="grafico-vista" aria-label="Precio promedio según la vista de 0 a 4" role="img"></canvas></div>
+            <p class="frase" id="frase-vista"></p>
+            <p class="mensaje-vacio">Sin datos para esta combinación.</p>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== Requerimiento 1 ===================== -->
+    <section class="seccion revelar" id="req-1" data-menu="analisis" data-titulo="Requerimiento 1">
+      <div class="contenedor">
+        <header class="seccion-encabezado">
+          <p class="seccion-numero">Requerimiento 1 <span class="seccion-idea">Idea 3 · No es solo el tamaño, es la calidad</span></p>
+          <h2>Precio promedio por m²</h2>
+        </header>
+        <div class="rejilla-2">
+          <figure class="tarjeta filtrable">
+            <figcaption>Precio por m² por ciudad <span class="etiqueta etiqueta-filtro">Responde a filtros</span></figcaption>
+            <div class="lienzo lienzo-alto"><canvas id="grafico-ciudad-m2" aria-label="Precio por metro cuadrado por ciudad" role="img"></canvas></div>
+            <p class="frase" id="frase-ciudad-m2"></p>
+            <p class="mensaje-vacio">Sin datos para esta combinación.</p>
+          </figure>
+          <figure class="tarjeta filtrable">
+            <figcaption>Precio por m² por mes <span class="etiqueta etiqueta-filtro">Responde a filtros</span></figcaption>
+            <div class="lienzo lienzo-alto"><canvas id="grafico-mes-m2" aria-label="Precio por metro cuadrado por mes" role="img"></canvas></div>
+            <p class="frase" id="frase-mes-m2"></p>
+            <p class="mensaje-vacio">Sin datos para esta combinación.</p>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== Requerimiento 2 ===================== -->
+    <section class="seccion revelar" id="req-2" data-menu="analisis" data-titulo="Requerimiento 2">
+      <div class="contenedor">
+        <header class="seccion-encabezado">
+          <p class="seccion-numero">Requerimiento 2 <span class="seccion-idea">Idea 3 · No es solo el tamaño, es la calidad</span></p>
+          <h2>Comparativa entre tipos de vivienda</h2>
+        </header>
+        <figure class="tarjeta filtrable">
+          <figcaption>Precio promedio y precio por m² por tipo de vivienda <span class="etiqueta etiqueta-filtro">Responde a filtros</span></figcaption>
+          <div class="lienzo"><canvas id="grafico-tipos" aria-label="Precio promedio y por metro cuadrado por tipo de vivienda" role="img"></canvas></div>
+          <p class="frase" id="frase-tipos"></p>
+          <p class="nota">El dataset no informa el tipo de vivienda: se derivó de la cantidad de plantas y de la presencia de sótano.</p>
+          <p class="mensaje-vacio">Sin datos para esta combinación.</p>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ===================== Requerimiento 5 ===================== -->
+    <section class="seccion revelar" id="req-5" data-menu="analisis" data-titulo="Requerimiento 5">
+      <div class="contenedor">
+        <header class="seccion-encabezado">
+          <p class="seccion-numero">Requerimiento 5 <span class="seccion-idea">Idea 3 · No es solo el tamaño, es la calidad</span></p>
+          <h2>Influencia de baños y habitaciones</h2>
+        </header>
+        <div class="rejilla-2">
+          <figure class="tarjeta filtrable">
+            <figcaption>Precio promedio por grupo de baños <span class="etiqueta etiqueta-filtro">Responde a filtros</span></figcaption>
+            <div class="lienzo"><canvas id="grafico-banios" aria-label="Precio promedio por grupo de baños" role="img"></canvas></div>
+            <p class="frase" id="frase-banios"></p>
+            <p class="mensaje-vacio">Sin datos para esta combinación.</p>
+          </figure>
+          <figure class="tarjeta filtrable">
+            <figcaption>Precio promedio por grupo de habitaciones <span class="etiqueta etiqueta-filtro">Responde a filtros</span></figcaption>
+            <div class="lienzo"><canvas id="grafico-habitaciones" aria-label="Precio promedio por grupo de habitaciones" role="img"></canvas></div>
+            <p class="frase" id="frase-habitaciones"></p>
+            <p class="mensaje-vacio">Sin datos para esta combinación.</p>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== Requerimiento 8 ===================== -->
+    <section class="seccion revelar" id="req-8" data-menu="analisis" data-titulo="Requerimiento 8">
+      <div class="contenedor">
+        <header class="seccion-encabezado">
+          <p class="seccion-numero">Requerimiento 8 <span class="seccion-idea">Idea 3 · No es solo el tamaño, es la calidad</span></p>
+          <h2>Correlación entre superficie y valor</h2>
+        </header>
+        <div class="rejilla-2 rejilla-ancha">
+          <figure class="tarjeta filtrable">
+            <figcaption>Superficie (m²) vs. precio <span class="etiqueta etiqueta-filtro">Responde a filtros</span></figcaption>
+            <div class="indicadores-mini">
+              <p><span>Correlación (r)</span><strong id="corr-r">—</strong></p>
+              <p><span>R²</span><strong id="corr-r2">—</strong></p>
+            </div>
+            <div class="lienzo"><canvas id="grafico-superficie" aria-label="Dispersión de superficie contra precio con línea de tendencia" role="img"></canvas></div>
+            <p class="frase" id="frase-superficie"></p>
+            <p class="mensaje-vacio">Sin datos para esta combinación.</p>
+          </figure>
+          <figure class="tarjeta">
+            <figcaption>Correlación de cada variable con el precio <span class="etiqueta etiqueta-global">Resultado global</span></figcaption>
+            <div class="lienzo lienzo-alto"><canvas id="grafico-correlaciones" aria-label="Correlación de cada variable con el precio" role="img"></canvas></div>
+            <p class="frase" id="frase-correlaciones"></p>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== Requerimiento 6 ===================== -->
+    <section class="seccion revelar" id="req-6" data-menu="analisis" data-titulo="Requerimiento 6">
+      <div class="contenedor">
+        <header class="seccion-encabezado">
+          <p class="seccion-numero">Requerimiento 6 <span class="seccion-idea">Idea 4 · Mercado y segmentos</span></p>
+          <h2>Evolución del precio por año de construcción</h2>
+        </header>
+        <div class="rejilla-2">
+          <figure class="tarjeta filtrable">
+            <figcaption>Precio promedio por año de construcción <span class="etiqueta etiqueta-filtro">Responde a filtros</span></figcaption>
+            <div class="lienzo"><canvas id="grafico-anio-construccion" aria-label="Precio promedio por año de construcción" role="img"></canvas></div>
+            <p class="frase" id="frase-anio-construccion"></p>
+            <p class="mensaje-vacio">Sin datos para esta combinación.</p>
+          </figure>
+          <figure class="tarjeta filtrable">
+            <figcaption>Precio por m² por década de construcción <span class="etiqueta etiqueta-filtro">Responde a filtros</span></figcaption>
+            <div class="lienzo"><canvas id="grafico-decada" aria-label="Precio por metro cuadrado por década de construcción" role="img"></canvas></div>
+            <p class="frase" id="frase-decada"></p>
+            <p class="mensaje-vacio">Sin datos para esta combinación.</p>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== Requerimiento 10 ===================== -->
+    <section class="seccion revelar" id="req-10" data-menu="analisis" data-titulo="Requerimiento 10">
+      <div class="contenedor">
+        <header class="seccion-encabezado">
+          <p class="seccion-numero">Requerimiento 10 <span class="seccion-idea">Idea 4 · Mercado y segmentos</span></p>
+          <h2>Segmentación por rangos de precio</h2>
+        </header>
+        <div class="rejilla-2">
+          <figure class="tarjeta filtrable">
+            <figcaption>Cantidad de ventas por rango de precio <span class="etiqueta etiqueta-filtro">Responde a filtros</span></figcaption>
+            <div class="lienzo"><canvas id="grafico-segmentos" aria-label="Distribución de ventas por rango de precio" role="img"></canvas></div>
+            <p class="frase" id="frase-segmentos"></p>
+            <p class="mensaje-vacio">Sin datos para esta combinación.</p>
+          </figure>
+          <div class="tarjeta filtrable">
+            <h3 class="tarjeta-titulo">Detalle por segmento <span class="etiqueta etiqueta-filtro">Responde a filtros</span></h3>
+            <div class="tabla-scroll">
+              <table class="tabla" id="tabla-segmentos">
+                <thead><tr><th>Rango</th><th>Cantidad</th><th>% del total</th><th>Precio promedio</th><th>m² promedio</th></tr></thead>
+                <tbody></tbody>
+              </table>
+            </div>
+            <p class="mensaje-vacio">Sin datos para esta combinación.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== Validación estadística ===================== -->
+    <section class="seccion revelar" id="anova" data-menu="anova" data-titulo="ANOVA">
+      <div class="contenedor">
+        <header class="seccion-encabezado">
+          <p class="seccion-numero">Validación estadística <span class="etiqueta etiqueta-global">Resultado global</span></p>
+          <h2>Análisis de varianza (ANOVA)</h2>
+        </header>
+
+        <div class="hipotesis">
+          <p><strong>H0:</strong> el precio medio es igual en todos los grupos.</p>
+          <p><strong>H1:</strong> al menos un grupo tiene un precio medio diferente.</p>
+          <p><strong>Nivel de significancia:</strong> α = 0,05.</p>
+          <p class="nota">Se usó log(price) porque la distribución del precio es muy asimétrica. Levene evalúa la igualdad de varianzas; Welch y Kruskal-Wallis confirman el resultado sin suponer varianzas iguales ni normalidad.</p>
+        </div>
+
+        <div class="tarjeta">
+          <h3 class="tarjeta-titulo">ANOVA de un factor</h3>
+          <div class="tabla-scroll">
+            <table class="tabla tabla-anova" id="tabla-anova">
+              <thead>
+                <tr><th>Factor</th><th>Grupos</th><th>F</th><th>p-valor</th><th>η²</th><th>Levene (p)</th><th>Welch (p)</th><th>Kruskal-Wallis (p)</th><th>Conclusión</th></tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="rejilla-2">
+          <figure class="tarjeta">
+            <figcaption>Tamaño del efecto (η²) por factor</figcaption>
+            <div class="lienzo"><canvas id="grafico-eta2" aria-label="Eta cuadrado por factor" role="img"></canvas></div>
+            <p class="frase" id="frase-eta2"></p>
+          </figure>
+          <div class="tarjeta">
+            <h3 class="tarjeta-titulo">ANOVA de dos factores: baños × habitaciones</h3>
+            <div class="tabla-scroll">
+              <table class="tabla" id="tabla-anova-dos">
+                <thead><tr><th>Fuente</th><th>Suma de cuadrados</th><th>gl</th><th>F</th><th>p-valor</th></tr></thead>
+                <tbody></tbody>
+              </table>
+            </div>
+            <p class="frase" id="frase-anova-dos"></p>
+          </div>
+        </div>
+
+        <div class="tarjeta interpretacion">
+          <h3 class="tarjeta-titulo">Interpretación</h3>
+          <p id="interpretacion-anova"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== Requerimiento 7 ===================== -->
+    <section class="seccion revelar" id="req-7" data-menu="prediccion" data-titulo="Requerimiento 7">
+      <div class="contenedor">
+        <header class="seccion-encabezado">
+          <p class="seccion-numero">Requerimiento 7</p>
+          <h2>Predicción de precios</h2>
+        </header>
+        <div class="rejilla-2">
+          <figure class="tarjeta">
+            <figcaption>Precio real vs. predicho (regresión lineal, conjunto de prueba) <span class="etiqueta etiqueta-global">Resultado global</span></figcaption>
+            <div class="lienzo"><canvas id="grafico-predicciones" aria-label="Dispersión de precio real contra precio predicho" role="img"></canvas></div>
+            <p class="frase" id="frase-predicciones"></p>
+          </figure>
+          <div class="tarjeta">
+            <h3 class="tarjeta-titulo">Métricas de los modelos <span class="etiqueta etiqueta-global">Resultado global</span></h3>
+            <div class="tabla-scroll">
+              <table class="tabla" id="tabla-metricas">
+                <thead><tr><th>Modelo</th><th>R²</th><th>RMSE</th><th>MAE</th></tr></thead>
+                <tbody></tbody>
+              </table>
+            </div>
+            <p class="frase" id="frase-metricas"></p>
+          </div>
+        </div>
+
+        <div class="tarjeta simulador" id="simulador">
+          <h3 class="tarjeta-titulo">Simulador de precio <span class="etiqueta etiqueta-global">Modelo de regresión lineal</span></h3>
+          <div class="simulador-rejilla">
+            <div class="simulador-controles">
+              <label for="sim-m2">Superficie <output id="sim-m2-valor"></output></label>
+              <input type="range" id="sim-m2" min="30" max="600" step="10" value="180">
+              <label for="sim-banios">Baños <output id="sim-banios-valor"></output></label>
+              <input type="range" id="sim-banios" min="1" max="6" step="0.25" value="2">
+              <label for="sim-habitaciones">Habitaciones <output id="sim-habitaciones-valor"></output></label>
+              <input type="range" id="sim-habitaciones" min="1" max="8" step="1" value="3">
+              <label for="sim-calidad">Calidad de construcción (grade) <output id="sim-calidad-valor"></output></label>
+              <input type="range" id="sim-calidad" min="3" max="13" step="1" value="7">
+              <button class="boton boton-secundario" id="sim-reiniciar" type="button">Valores por defecto</button>
+            </div>
+            <div class="simulador-resultado" aria-live="polite">
+              <p class="simulador-etiqueta">Precio estimado</p>
+              <p class="simulador-precio" id="sim-precio">—</p>
+              <p class="simulador-detalle" id="sim-detalle"></p>
+            </div>
+          </div>
+          <p class="frase" id="frase-simulador"></p>
+          <p class="nota" id="sim-fijas"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== Conclusiones ===================== -->
+    <section class="seccion revelar" id="conclusiones" data-menu="conclusiones" data-titulo="Conclusiones">
+      <div class="contenedor">
+        <header class="seccion-encabezado">
+          <p class="seccion-numero">Cierre <span class="etiqueta etiqueta-global">Todos los datos, sin filtros</span></p>
+          <h2>Conclusiones y recomendaciones</h2>
+        </header>
+
+        <h3 class="subtitulo">Hallazgos</h3>
+        <div class="hallazgos" id="hallazgos"></div>
+
+        <h3 class="subtitulo">Recomendaciones</h3>
+        <div class="recomendaciones" id="recomendaciones"></div>
+
+        <h3 class="subtitulo">Limitaciones</h3>
+        <ul class="limitaciones" id="limitaciones"></ul>
+      </div>
+    </section>
+    <!-- ===================== Dashboard de Power BI ===================== -->
+    <section class="seccion revelar" id="powerbi" data-menu="powerbi" data-titulo="Power BI">
+      <div class="contenedor">
+        <header class="seccion-encabezado">
+          <p class="seccion-numero">Informe publicado</p>
+          <h2>Dashboard de Power BI</h2>
+          <p class="seccion-descripcion">El mismo modelo estrella, con medidas DAX y segmentadores sincronizados.</p>
+        </header>
+        <div class="marco-powerbi">
+          <iframe title="MercadoInmobiliario_Final" src="https://app.powerbi.com/view?r=eyJrIjoiNzk5YzE3NGYtZWIwOS00YzQyLThlYTItM2UyNmIyYjk2Yjg5IiwidCI6IjhkMzY4MzZlLTZiNzUtNGRlNi1iYWI5LTVmNGIxNzc1NDI3ZiIsImMiOjR9" frameborder="0" allowFullScreen="true"></iframe>
+        </div>
+        <p class="acciones">
+          <a class="boton" href="https://app.powerbi.com/view?r=eyJrIjoiNzk5YzE3NGYtZWIwOS00YzQyLThlYTItM2UyNmIyYjk2Yjg5IiwidCI6IjhkMzY4MzZlLTZiNzUtNGRlNi1iYWI5LTVmNGIxNzc1NDI3ZiIsImMiOjR9" target="_blank" rel="noopener">Abrir en pantalla completa</a>
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================== Pie de página ===================== -->
+  <footer class="pie">
+    <div class="contenedor">
+      <p class="pie-titulo">Exploración del Mercado Inmobiliario: King County, Washington</p>
+      <p>Proyecto final · Herramientas Computacionales</p>
+      <p>Tecnologías: PySpark · Power BI · DAX · Python · Chart.js</p>
+      <p class="pie-fuente">Fuente de datos: House Sales in King County (Kaggle).</p>
+    </div>
+  </footer>
+
+  <!-- Indicador del modo presentación -->
+  <div class="indicador-seccion" id="indicador-seccion" aria-hidden="true"></div>
+</body>
+</html>

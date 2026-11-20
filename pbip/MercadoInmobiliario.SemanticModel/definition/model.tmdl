@@ -1,0 +1,32 @@
+model Model
+	culture: es-MX
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	valueFilterBehavior: independent
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBI_QueryOrder = ["RutaSalida","dim_ubicacion","dim_fecha","dim_vivienda","predicciones","coeficientes_modelo","metricas_modelo","correlaciones","resultados_anova","fact_ventas"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table dim_ubicacion
+ref table dim_fecha
+ref table dim_vivienda
+ref table predicciones
+ref table coeficientes_modelo
+ref table metricas_modelo
+ref table correlaciones
+ref table resultados_anova
+ref table fact_ventas
+ref table _Medidas
+ref table m2
+ref table Banios
+ref table Habitaciones
+ref table Calidad
+
+ref cultureInfo es-MX
+

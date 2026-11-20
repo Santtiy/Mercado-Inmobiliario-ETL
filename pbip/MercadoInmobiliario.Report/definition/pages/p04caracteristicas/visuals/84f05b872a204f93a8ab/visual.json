@@ -1,0 +1,82 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "84f05b872a204f93a8ab",
+  "position": {
+    "x": 1460,
+    "y": 595,
+    "z": 10000,
+    "height": 465,
+    "width": 440,
+    "tabOrder": 10000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Validación estadística (ANOVA sobre log del precio)",
+                    "textStyle": {
+                      "fontSize": "13pt",
+                      "color": "#1F4E79",
+                      "fontWeight": "bold"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Baños: F = 2.268, p < 0,001, η² = 0,298. Los grupos de baños explican cerca del 30 % de la variación del precio.",
+                    "textStyle": {
+                      "fontSize": "12pt",
+                      "color": "#1F2937"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Habitaciones: F = 649, p < 0,001, η² = 0,132.",
+                    "textStyle": {
+                      "fontSize": "12pt",
+                      "color": "#1F2937"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "ANOVA de dos factores: ambos factores son significativos (p < 0,001) y la interacción no lo es (p = 0,25).",
+                    "textStyle": {
+                      "fontSize": "12pt",
+                      "color": "#1F2937"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Conclusión: los baños influyen más en el precio que las habitaciones.",
+                    "textStyle": {
+                      "fontSize": "12pt",
+                      "color": "#1F2937"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

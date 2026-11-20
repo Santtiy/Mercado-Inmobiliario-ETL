@@ -1,0 +1,84 @@
+table dim_fecha
+	lineageTag: d5827c18-70dc-47ef-9988-ac5469bcf98c
+	dataCategory: Time
+
+	column fecha
+		dataType: dateTime
+		isKey
+		formatString: Long Date
+		lineageTag: 482a88eb-d63e-4278-b0f5-2f0c0db79568
+		summarizeBy: none
+		sourceColumn: fecha
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column anio
+		dataType: int64
+		formatString: 0
+		lineageTag: 165dffe3-3c97-4003-a3f1-f28842004a4f
+		summarizeBy: none
+		sourceColumn: anio
+
+		annotation SummarizationSetBy = Automatic
+
+	column mes
+		dataType: int64
+		formatString: 0
+		lineageTag: 31c1507b-a6b3-4913-b44b-63697f8d53b3
+		summarizeBy: none
+		sourceColumn: mes
+
+		annotation SummarizationSetBy = Automatic
+
+	column nombre_mes
+		dataType: string
+		lineageTag: 7958bc77-6271-4f35-8baa-79b7ae8b9ea1
+		summarizeBy: none
+		sourceColumn: nombre_mes
+		sortByColumn: mes
+
+		annotation SummarizationSetBy = Automatic
+
+	column trimestre
+		dataType: int64
+		formatString: 0
+		lineageTag: cd9ca439-2e2c-4863-b20d-2e600b6356b4
+		summarizeBy: none
+		sourceColumn: trimestre
+
+		annotation SummarizationSetBy = Automatic
+
+	column dia_semana
+		dataType: string
+		lineageTag: abe2a94f-5dee-4315-8953-bb1e23fd5225
+		summarizeBy: none
+		sourceColumn: dia_semana
+		sortByColumn: 'Orden Dia'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Orden Dia' = WEEKDAY(dim_fecha[fecha], 2)
+		isHidden
+		lineageTag: 95cc4daf-cd0b-451c-ae67-66710b392860
+		summarizeBy: none
+
+	column periodo = FORMAT(dim_fecha[fecha], "yyyy-MM")
+		lineageTag: a3935158-798f-40f9-ade2-172167c4bd9d
+		summarizeBy: none
+
+	partition dim_fecha = m
+		mode: import
+		source =
+				let
+				    Origen = Csv.Document(File.Contents(RutaSalida & "dim_fecha.csv"),[Delimiter=",", Columns=6, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    #"Usar la primera fila como encabezado" = Table.PromoteHeaders(Origen, [PromoteAllScalars=true]),
+				    #"Cambiar tipo" = Table.TransformColumnTypes(#"Usar la primera fila como encabezado",{{"fecha", type date}, {"anio", Int64.Type}, {"mes", Int64.Type}, {"nombre_mes", type text}, {"trimestre", Int64.Type}, {"dia_semana", type text}}, "en-US")
+				in
+				    #"Cambiar tipo"
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Table
+

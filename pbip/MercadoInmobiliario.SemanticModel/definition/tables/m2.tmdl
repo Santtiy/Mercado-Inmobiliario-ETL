@@ -1,0 +1,21 @@
+table m2
+	lineageTag: ec62bc88-d2fd-435b-994e-ef0a81be66be
+
+	measure 'Valor m2' = SELECTEDVALUE('m2'[m2], 180)
+		formatString: 0
+		lineageTag: 537fcdcc-81e4-414b-87d7-f6abbc6ce33b
+
+	column m2
+		formatString: 0
+		lineageTag: c3a6b4db-5d52-4561-a069-ea5f0ea0d1af
+		summarizeBy: none
+		sourceColumn: [Value]
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 0
+				}
+
+	partition m2 = calculated
+		source = GENERATESERIES(30, 600, 10)
+

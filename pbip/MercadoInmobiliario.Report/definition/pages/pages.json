@@ -1,0 +1,18 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/pagesMetadata/1.1.0/schema.json",
+  "pageOrder": [
+    "p01resumen",
+    "p02mapa",
+    "p03barrios",
+    "p04caracteristicas",
+    "p05tipologias",
+    "p06evolucion",
+    "p07superficie",
+    "p08agua",
+    "p09segmentos",
+    "p10prediccion",
+    "p11anova",
+    "p99tooltip"
+  ],
+  "activePageName": "p03barrios"
+}

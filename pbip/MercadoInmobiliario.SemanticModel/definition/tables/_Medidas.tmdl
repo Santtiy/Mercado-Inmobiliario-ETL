@@ -1,0 +1,128 @@
+table _Medidas
+	lineageTag: 77bd6f47-294e-48b7-94a7-456a94cd4c77
+
+	measure 'Cantidad Ventas' = COUNTROWS(fact_ventas)
+		formatString: #,0
+		lineageTag: a1db37f3-f12f-48e3-a71b-acc3ee35506d
+
+	measure 'Precio Promedio' = AVERAGE(fact_ventas[price])
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: f8928845-1c0b-40d5-9216-44979f86406a
+
+	measure 'Precio Mediano' = MEDIAN(fact_ventas[price])
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: 4e39fcd7-607f-430f-8d9c-d756ea771bd3
+
+	measure 'Precio Maximo' = MAX(fact_ventas[price])
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: ac7da350-e864-4a65-9d35-fff07ea7a655
+
+	measure 'Superficie Promedio m2' = AVERAGE(fact_ventas[sqft_living_m2])
+		formatString: #,0.0
+		lineageTag: fc3638dc-5b7f-4895-b244-23c6a9bc7e0f
+
+	measure 'Precio m2 Promedio' = DIVIDE(SUM(fact_ventas[price]), SUM(fact_ventas[sqft_living_m2]))
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: d42918b0-4445-470b-8243-08766b434216
+
+	measure 'Ranking Barrio' = IF(HASONEVALUE(dim_ubicacion[barrio]), RANKX(ALLSELECTED(dim_ubicacion[barrio], dim_ubicacion[ciudad]), [Precio Promedio], , DESC, DENSE))
+		formatString: 0
+		lineageTag: 3f332e69-3deb-49db-83b1-dfeaca8c1e5f
+
+	measure 'Precio Frente Agua' = CALCULATE([Precio Promedio], fact_ventas[waterfront] = 1)
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: 07dbff44-434d-4742-a2c3-d3dd5828a6fa
+
+	measure 'Precio Sin Frente Agua' = CALCULATE([Precio Promedio], fact_ventas[waterfront] = 0)
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: cb31ab9d-a7d4-4bed-9dae-3602d28b6e4b
+
+	measure 'Prima Vista al Agua' = DIVIDE([Precio Frente Agua], [Precio Sin Frente Agua]) - 1
+		formatString: 0.0 %;-0.0 %;0.0 %
+		lineageTag: 73110d20-ecc3-4b1a-a800-6c9632479ec1
+
+	measure 'Ventas Frente Agua' = CALCULATE([Cantidad Ventas], fact_ventas[waterfront] = 1)
+		formatString: #,0
+		lineageTag: a0f15338-77a1-431c-8543-c6d64dfcf078
+
+	measure 'Correlacion Superficie Precio' =
+			VAR mx = AVERAGE(fact_ventas[sqft_living_m2])
+			VAR my = AVERAGE(fact_ventas[price])
+			VAR cov = SUMX(fact_ventas, (fact_ventas[sqft_living_m2] - mx) * (fact_ventas[price] - my))
+			VAR sx = SQRT(SUMX(fact_ventas, (fact_ventas[sqft_living_m2] - mx) ^ 2))
+			VAR sy = SQRT(SUMX(fact_ventas, (fact_ventas[price] - my) ^ 2))
+			RETURN DIVIDE(cov, sx * sy)
+		formatString: 0.000
+		lineageTag: 6963cb6d-bcbc-4bc0-b8e4-dec8a7abd19d
+
+	measure 'R2 Superficie Precio' = [Correlacion Superficie Precio] ^ 2
+		formatString: 0.000
+		lineageTag: 0ccba6c5-fd98-43f9-aeee-0cff9acc6b23
+
+	measure '% Ventas del Segmento' = DIVIDE([Cantidad Ventas], CALCULATE([Cantidad Ventas], ALL(fact_ventas[rango_precio])))
+		formatString: 0.0 %;-0.0 %;0.0 %
+		lineageTag: 5a6e79cc-ddfb-44f2-86e4-cef918acae24
+
+	measure 'Precio Promedio Renovadas' = CALCULATE([Precio Promedio], fact_ventas[renovada] = 1)
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: de9684f9-6292-4f5c-8a12-13d586d6b838
+
+	measure 'Precio Promedio No Renovadas' = CALCULATE([Precio Promedio], fact_ventas[renovada] = 0)
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: ef9300c4-9766-46b0-bf79-3a42a8a9f03b
+
+	measure 'R2 Modelo' = CALCULATE(MAX(metricas_modelo[r2]), metricas_modelo[modelo] = "Regresión lineal")
+		formatString: 0.000
+		lineageTag: e01017fd-36fd-41d6-89e7-a1d3d460d03e
+
+	measure 'R2 Random Forest' = CALCULATE(MAX(metricas_modelo[r2]), metricas_modelo[modelo] = "Random Forest")
+		formatString: 0.000
+		lineageTag: 66326404-9f5f-42ee-81de-cac308111711
+
+	measure 'Error Absoluto Medio' = AVERAGEX(predicciones, ABS(predicciones[price] - predicciones[precio_predicho]))
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: 544dab5e-11c9-40de-8596-224ec22b171f
+
+	measure 'Error Porcentual Medio' = AVERAGEX(predicciones, DIVIDE(ABS(predicciones[price] - predicciones[precio_predicho]), predicciones[price]))
+		formatString: 0.0 %;-0.0 %;0.0 %
+		lineageTag: e6dcf056-2752-47c2-a564-3a920682d4fe
+
+	measure 'Titulo Filtro Ciudad' = IF(ISFILTERED(dim_ubicacion[ciudad]), "Ciudad: " & SELECTEDVALUE(dim_ubicacion[ciudad], "varias"), "Todo King County")
+		lineageTag: 63ef14ab-ebd7-4d3f-805e-e982e793ff64
+
+	measure 'Precio Estimado' =
+			VAR b0   = LOOKUPVALUE(coeficientes_modelo[coeficiente], coeficientes_modelo[variable], "intercepto")
+			VAR bM2  = LOOKUPVALUE(coeficientes_modelo[coeficiente], coeficientes_modelo[variable], "sqft_living_m2")
+			VAR bBan = LOOKUPVALUE(coeficientes_modelo[coeficiente], coeficientes_modelo[variable], "bathrooms")
+			VAR bHab = LOOKUPVALUE(coeficientes_modelo[coeficiente], coeficientes_modelo[variable], "bedrooms")
+			VAR bGra = LOOKUPVALUE(coeficientes_modelo[coeficiente], coeficientes_modelo[variable], "grade")
+			VAR bWat = LOOKUPVALUE(coeficientes_modelo[coeficiente], coeficientes_modelo[variable], "waterfront")
+			VAR bVie = LOOKUPVALUE(coeficientes_modelo[coeficiente], coeficientes_modelo[variable], "view")
+			VAR bCon = LOOKUPVALUE(coeficientes_modelo[coeficiente], coeficientes_modelo[variable], "condition")
+			VAR bAnt = LOOKUPVALUE(coeficientes_modelo[coeficiente], coeficientes_modelo[variable], "antiguedad")
+			VAR bLat = LOOKUPVALUE(coeficientes_modelo[coeficiente], coeficientes_modelo[variable], "lat")
+			-- Variables que no se controlan con parámetros: se fijan en su promedio
+			VAR pWat = CALCULATE(AVERAGE(fact_ventas[waterfront]), ALL(fact_ventas))
+			VAR pVie = CALCULATE(AVERAGE(fact_ventas[view]), ALL(fact_ventas))
+			VAR pCon = CALCULATE(AVERAGE(fact_ventas[condition]), ALL(fact_ventas))
+			VAR pAnt = CALCULATE(AVERAGE(fact_ventas[antiguedad]), ALL(fact_ventas))
+			VAR pLat = CALCULATE(AVERAGE(fact_ventas[lat]), ALL(fact_ventas))
+			RETURN
+			    b0
+			    + bM2  * [Valor m2]
+			    + bBan * [Valor Banios]
+			    + bHab * [Valor Habitaciones]
+			    + bGra * [Valor Calidad]
+			    + bWat * pWat + bVie * pVie + bCon * pCon + bAnt * pAnt + bLat * pLat
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: 699ab996-3df0-431f-9546-aba75fa6e940
+
+	column Medidas
+		isHidden
+		lineageTag: bb68982d-b5a3-4af6-9782-0071ad52d22b
+		isNameInferred
+		sourceColumn: [Medidas]
+
+	partition _Medidas = calculated
+		source = ROW("Medidas", BLANK())
+

@@ -1,0 +1,104 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "a9e7dd4fad7b40eeb0c3",
+  "position": {
+    "x": 20,
+    "y": 135,
+    "z": 4000,
+    "height": 925,
+    "width": 300,
+    "tabOrder": 4000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Hipótesis",
+                    "textStyle": {
+                      "fontSize": "14pt",
+                      "color": "#1F4E79",
+                      "fontWeight": "bold"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "H0: el precio medio es igual en todos los grupos.",
+                    "textStyle": {
+                      "fontSize": "12pt",
+                      "color": "#1F2937"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "H1: al menos un grupo difiere.",
+                    "textStyle": {
+                      "fontSize": "12pt",
+                      "color": "#1F2937"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "α = 0,05.",
+                    "textStyle": {
+                      "fontSize": "12pt",
+                      "color": "#1F2937"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Se usa log(price) porque el precio tiene una distribución muy asimétrica.",
+                    "textStyle": {
+                      "fontSize": "12pt",
+                      "color": "#1F2937"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Para chequear supuestos se usaron Levene (igualdad de varianzas), Welch y Kruskal-Wallis.",
+                    "textStyle": {
+                      "fontSize": "12pt",
+                      "color": "#1F2937"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "En todos los factores se rechaza H0.",
+                    "textStyle": {
+                      "fontSize": "12pt",
+                      "color": "#1F2937"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

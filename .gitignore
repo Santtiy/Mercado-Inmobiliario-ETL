@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Spark / salidas temporales
+spark-warehouse/
+metastore_db/
+derby.log
+*.crc
+kc_house_clean/
+
+# Power BI (archivos locales y caché del proyecto .pbip)
+**/.pbi/localSettings.json
+**/.pbi/cache.abf
+
+# Clon local antiguo de la web (no forma parte del proyecto)
+Mercado-Inmobiliario-ETL/
+
+# Sistema / editores
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+.vercel

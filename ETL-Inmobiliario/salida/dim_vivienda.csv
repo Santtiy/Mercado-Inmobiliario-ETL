@@ -1,0 +1,81 @@
+id_vivienda,floors,tiene_sotano,grade,tipo_vivienda,categoria_calidad
+1,1.0,0,3,Una planta,Económica
+2,1.0,0,4,Una planta,Económica
+3,1.0,0,5,Una planta,Económica
+4,1.0,0,6,Una planta,Económica
+5,1.0,0,7,Una planta,Estándar
+6,1.0,0,8,Una planta,Estándar
+7,1.0,0,9,Una planta,Alta
+8,1.0,0,10,Una planta,Alta
+9,1.0,0,11,Una planta,Lujo
+10,1.0,0,12,Una planta,Lujo
+11,1.0,0,13,Una planta,Lujo
+12,1.0,1,4,Una planta con sótano,Económica
+13,1.0,1,5,Una planta con sótano,Económica
+14,1.0,1,6,Una planta con sótano,Económica
+15,1.0,1,7,Una planta con sótano,Estándar
+16,1.0,1,8,Una planta con sótano,Estándar
+17,1.0,1,9,Una planta con sótano,Alta
+18,1.0,1,10,Una planta con sótano,Alta
+19,1.0,1,11,Una planta con sótano,Lujo
+20,1.0,1,12,Una planta con sótano,Lujo
+21,1.0,1,13,Una planta con sótano,Lujo
+22,1.5,0,4,Dos plantas,Económica
+23,1.5,0,5,Dos plantas,Económica
+24,1.5,0,6,Dos plantas,Económica
+25,1.5,0,7,Dos plantas,Estándar
+26,1.5,0,8,Dos plantas,Estándar
+27,1.5,0,9,Dos plantas,Alta
+28,1.5,0,10,Dos plantas,Alta
+29,1.5,0,11,Dos plantas,Lujo
+30,1.5,1,5,Dos plantas,Económica
+31,1.5,1,6,Dos plantas,Económica
+32,1.5,1,7,Dos plantas,Estándar
+33,1.5,1,8,Dos plantas,Estándar
+34,1.5,1,9,Dos plantas,Alta
+35,1.5,1,10,Dos plantas,Alta
+36,1.5,1,11,Dos plantas,Lujo
+37,2.0,0,5,Dos plantas,Económica
+38,2.0,0,6,Dos plantas,Económica
+39,2.0,0,7,Dos plantas,Estándar
+40,2.0,0,8,Dos plantas,Estándar
+41,2.0,0,9,Dos plantas,Alta
+42,2.0,0,10,Dos plantas,Alta
+43,2.0,0,11,Dos plantas,Lujo
+44,2.0,0,12,Dos plantas,Lujo
+45,2.0,0,13,Dos plantas,Lujo
+46,2.0,1,6,Dos plantas,Económica
+47,2.0,1,7,Dos plantas,Estándar
+48,2.0,1,8,Dos plantas,Estándar
+49,2.0,1,9,Dos plantas,Alta
+50,2.0,1,10,Dos plantas,Alta
+51,2.0,1,11,Dos plantas,Lujo
+52,2.0,1,12,Dos plantas,Lujo
+53,2.0,1,13,Dos plantas,Lujo
+54,2.5,0,6,Tres o más plantas,Económica
+55,2.5,0,7,Tres o más plantas,Estándar
+56,2.5,0,8,Tres o más plantas,Estándar
+57,2.5,0,9,Tres o más plantas,Alta
+58,2.5,0,10,Tres o más plantas,Alta
+59,2.5,0,11,Tres o más plantas,Lujo
+60,2.5,1,7,Tres o más plantas,Estándar
+61,2.5,1,8,Tres o más plantas,Estándar
+62,2.5,1,9,Tres o más plantas,Alta
+63,2.5,1,10,Tres o más plantas,Alta
+64,2.5,1,11,Tres o más plantas,Lujo
+65,2.5,1,12,Tres o más plantas,Lujo
+66,2.5,1,13,Tres o más plantas,Lujo
+67,3.0,0,7,Tres o más plantas,Estándar
+68,3.0,0,8,Tres o más plantas,Estándar
+69,3.0,0,9,Tres o más plantas,Alta
+70,3.0,0,10,Tres o más plantas,Alta
+71,3.0,0,11,Tres o más plantas,Lujo
+72,3.0,0,12,Tres o más plantas,Lujo
+73,3.0,1,7,Tres o más plantas,Estándar
+74,3.0,1,8,Tres o más plantas,Estándar
+75,3.0,1,9,Tres o más plantas,Alta
+76,3.0,1,10,Tres o más plantas,Alta
+77,3.0,1,11,Tres o más plantas,Lujo
+78,3.0,1,12,Tres o más plantas,Lujo
+79,3.5,0,8,Tres o más plantas,Estándar
+80,3.5,1,12,Tres o más plantas,Lujo

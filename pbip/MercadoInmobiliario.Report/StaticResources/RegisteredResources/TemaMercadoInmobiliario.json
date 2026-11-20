@@ -1,0 +1,19 @@
+{
+  "name": "Mercado Inmobiliario",
+  "dataColors": [
+    "#1F4E79",
+    "#2E86AB",
+    "#F18F01",
+    "#C73E1D",
+    "#3B8B5A",
+    "#6C4F9E",
+    "#A23B72",
+    "#8E9AAF"
+  ],
+  "background": "#FFFFFF",
+  "foreground": "#1F2937",
+  "tableAccent": "#1F4E79",
+  "good": "#3B8B5A",
+  "bad": "#C73E1D",
+  "neutral": "#F18F01"
+}

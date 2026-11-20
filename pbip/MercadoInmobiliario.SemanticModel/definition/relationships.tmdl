@@ -1,0 +1,16 @@
+relationship 57579693-8bdd-4f49-973d-a74222c207db
+	fromColumn: fact_ventas.zipcode
+	toColumn: dim_ubicacion.zipcode
+
+relationship 17da8f6f-4a38-45ed-a447-945921988338
+	fromColumn: fact_ventas.date
+	toColumn: dim_fecha.fecha
+
+relationship aefa93c5-773f-4d9b-9a2a-c6121561bed7
+	fromColumn: fact_ventas.id_vivienda
+	toColumn: dim_vivienda.id_vivienda
+
+relationship 35934d37-8ebd-4091-85ab-4244e0a84019
+	fromColumn: predicciones.id
+	toColumn: fact_ventas.id
+

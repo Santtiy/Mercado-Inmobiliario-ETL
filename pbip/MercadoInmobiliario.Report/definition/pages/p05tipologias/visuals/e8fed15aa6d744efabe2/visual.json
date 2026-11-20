@@ -1,0 +1,60 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "e8fed15aa6d744efabe2",
+  "position": {
+    "x": 1130,
+    "y": 715,
+    "z": 10000,
+    "height": 345,
+    "width": 770,
+    "tabOrder": 10000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Aclaración metodológica",
+                    "textStyle": {
+                      "fontSize": "13pt",
+                      "color": "#1F4E79",
+                      "fontWeight": "bold"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "El dataset no informa el tipo de vivienda. Se clasificó según cantidad de plantas y presencia de sótano.",
+                    "textStyle": {
+                      "fontSize": "12pt",
+                      "color": "#1F2937"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "ANOVA: tipo de vivienda F = 1.330, p < 0,001, η² = 0,157. Categoría de calidad F = 5.239, p < 0,001, η² = 0,423 (el factor con más peso).",
+                    "textStyle": {
+                      "fontSize": "12pt",
+                      "color": "#1F2937"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

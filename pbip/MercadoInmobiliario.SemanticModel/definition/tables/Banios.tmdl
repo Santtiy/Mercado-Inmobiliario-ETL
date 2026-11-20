@@ -1,0 +1,21 @@
+table Banios
+	lineageTag: b0e49d5f-339c-4a42-ba39-6846eecbed4e
+
+	measure 'Valor Banios' = SELECTEDVALUE('Banios'[Banios], 2)
+		formatString: 0.00
+		lineageTag: cd47f113-9d42-4d6c-83d0-d2df298362d1
+
+	column Banios
+		formatString: 0.00
+		lineageTag: 858982fa-d712-4fb2-9ffa-88d6e3c12c0f
+		summarizeBy: none
+		sourceColumn: [Value]
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 0
+				}
+
+	partition Banios = calculated
+		source = GENERATESERIES(1, 6, 0.25)
+

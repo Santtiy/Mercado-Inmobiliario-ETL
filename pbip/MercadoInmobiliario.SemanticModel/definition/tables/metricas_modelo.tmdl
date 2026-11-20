@@ -1,0 +1,58 @@
+table metricas_modelo
+	lineageTag: fd82381c-a14c-44f6-8f6f-44ff40317ad6
+
+	column modelo
+		dataType: string
+		lineageTag: e3d34652-3507-4cf8-bce5-90072ee995f2
+		summarizeBy: none
+		sourceColumn: modelo
+
+		annotation SummarizationSetBy = Automatic
+
+	column r2
+		dataType: double
+		formatString: 0.000
+		lineageTag: 02b4c9c0-f616-459f-96fe-cdafab6073e8
+		summarizeBy: none
+		sourceColumn: r2
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column rmse
+		dataType: double
+		formatString: \$#,0
+		lineageTag: ea8a78af-d070-4da5-9c3a-66782a3f608f
+		summarizeBy: none
+		sourceColumn: rmse
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column mae
+		dataType: double
+		formatString: \$#,0
+		lineageTag: 34f0c21f-1cca-4033-b790-931a333bd431
+		summarizeBy: none
+		sourceColumn: mae
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition metricas_modelo = m
+		mode: import
+		source =
+				let
+				    Origen = Csv.Document(File.Contents(RutaSalida & "metricas_modelo.csv"),[Delimiter=",", Columns=4, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    #"Usar la primera fila como encabezado" = Table.PromoteHeaders(Origen, [PromoteAllScalars=true]),
+				    #"Cambiar tipo" = Table.TransformColumnTypes(#"Usar la primera fila como encabezado",{{"modelo", type text}, {"r2", type number}, {"rmse", type number}, {"mae", type number}}, "en-US")
+				in
+				    #"Cambiar tipo"
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,21 @@
+table Calidad
+	lineageTag: 019c6653-fa4e-4d33-80e4-0a2f4a90311e
+
+	measure 'Valor Calidad' = SELECTEDVALUE('Calidad'[Calidad], 7)
+		formatString: 0
+		lineageTag: 3577f7f5-80aa-4b2c-a5fb-5db797af0500
+
+	column Calidad
+		formatString: 0
+		lineageTag: bb971386-bfc6-4c9a-92da-58d81e7235f2
+		summarizeBy: none
+		sourceColumn: [Value]
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 0
+				}
+
+	partition Calidad = calculated
+		source = GENERATESERIES(3, 13, 1)
+

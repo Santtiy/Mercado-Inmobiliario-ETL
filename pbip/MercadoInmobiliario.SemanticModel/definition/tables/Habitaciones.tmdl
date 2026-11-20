@@ -1,0 +1,21 @@
+table Habitaciones
+	lineageTag: 3f739680-6065-4eef-b211-003a76ccde43
+
+	measure 'Valor Habitaciones' = SELECTEDVALUE('Habitaciones'[Habitaciones], 3)
+		formatString: 0
+		lineageTag: 7a5cb49a-a285-4cfe-8299-e765acf6ce33
+
+	column Habitaciones
+		formatString: 0
+		lineageTag: 3e4ac0a6-dde2-4d3e-b354-9db63f88071a
+		summarizeBy: none
+		sourceColumn: [Value]
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 0
+				}
+
+	partition Habitaciones = calculated
+		source = GENERATESERIES(1, 8, 1)
+

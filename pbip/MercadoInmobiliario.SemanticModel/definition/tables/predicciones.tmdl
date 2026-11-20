@@ -1,0 +1,59 @@
+table predicciones
+	lineageTag: 788721e5-5c93-4ebd-b8c7-697ea8a3ec9d
+
+	column id
+		dataType: string
+		isHidden
+		lineageTag: 8adeba4a-4595-45c0-ba6e-0e8eb9360f51
+		summarizeBy: none
+		sourceColumn: id
+
+		annotation SummarizationSetBy = Automatic
+
+	column price
+		dataType: double
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: e1e17e73-085c-4a14-9fc3-3555de3f27ac
+		summarizeBy: sum
+		sourceColumn: price
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column precio_predicho
+		dataType: double
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: af42a66d-e43c-430f-8d39-4250eeaf08f3
+		summarizeBy: sum
+		sourceColumn: precio_predicho
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column error
+		dataType: double
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: 83425872-a938-4903-a617-2c3f18c1b247
+		summarizeBy: sum
+		sourceColumn: error
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition predicciones = m
+		mode: import
+		source =
+				let
+				    Origen = Csv.Document(File.Contents(RutaSalida & "predicciones.csv"),[Delimiter=",", Columns=4, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    #"Usar la primera fila como encabezado" = Table.PromoteHeaders(Origen, [PromoteAllScalars=true]),
+				    #"Cambiar tipo" = Table.TransformColumnTypes(#"Usar la primera fila como encabezado",{{"id", type text}, {"price", type number}, {"precio_predicho", type number}, {"error", type number}}, "en-US")
+				in
+				    #"Cambiar tipo"
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Table
+

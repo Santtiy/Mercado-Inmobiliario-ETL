@@ -1,0 +1,59 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "d70ae55d9cac4a2294b7",
+  "position": {
+    "x": 1320,
+    "y": 800,
+    "z": 20000,
+    "height": 260,
+    "width": 580,
+    "tabOrder": 20000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Elegí valores en los segmentadores. Si no hay selección se usan 180 m², 2 baños, 3 habitaciones y calidad 7.",
+                    "textStyle": {
+                      "fontSize": "12pt",
+                      "color": "#1F2937"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Las demás variables del modelo (frente al agua, vista, condición, antigüedad, latitud) quedan fijas en su promedio.",
+                    "textStyle": {
+                      "fontSize": "12pt",
+                      "color": "#1F2937"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "R² de la regresión lineal: 0,725. Random Forest: 0,837.",
+                    "textStyle": {
+                      "fontSize": "12pt",
+                      "color": "#1F2937"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

@@ -1,0 +1,18 @@
+# Dependencias del proyecto "Exploración del Mercado Inmobiliario"
+# Instalación: pip install -r requirements.txt
+
+# ETL y modelo predictivo (Spark + MLlib). Requiere Java 17 o 21.
+pyspark
+
+# Manejo de tablas en memoria (lectura de las salidas del ETL)
+pandas
+
+# Pruebas estadísticas: ANOVA, Levene, Welch, Kruskal-Wallis
+scipy
+
+# ANOVA con modelos lineales y prueba post hoc de Tukey HSD
+statsmodels
+
+# Gráficos del análisis
+matplotlib
+seaborn

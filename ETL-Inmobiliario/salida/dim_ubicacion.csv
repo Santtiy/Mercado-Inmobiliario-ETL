@@ -1,0 +1,71 @@
+zipcode,ciudad,barrio,lat_promedio,long_promedio,cantidad_ventas
+98001,Auburn,Auburn Norte / Algona,47.309111,-122.270637,358
+98002,Auburn,Auburn Centro,47.308791,-122.21332,197
+98003,Federal Way,Federal Way Este,47.315608,-122.310105,276
+98004,Bellevue,Bellevue Centro / Clyde Hill,47.616069,-122.20514,315
+98005,Bellevue,Bellevue Norte / Bridle Trails,47.611532,-122.167268,168
+98006,Bellevue,Bellevue Sur / Newport,47.558039,-122.146906,490
+98007,Bellevue,Bellevue Este / Crossroads,47.610804,-122.142058,139
+98008,Bellevue,Bellevue Noreste / Lake Hills,47.613312,-122.115834,283
+98010,Black Diamond,Black Diamond,47.332937,-121.999586,99
+98011,Bothell,Bothell,47.755105,-122.201149,194
+98014,Carnation,Carnation,47.671697,-121.848081,123
+98019,Duvall,Duvall,47.737096,-121.954832,190
+98022,Enumclaw,Enumclaw,47.211226,-121.995549,233
+98023,Federal Way,Federal Way Oeste / Dash Point,47.308691,-122.364382,492
+98024,Fall City,Fall City,47.558765,-121.905494,79
+98027,Issaquah,Issaquah,47.521583,-122.042725,411
+98028,Kenmore,Kenmore,47.755122,-122.245968,282
+98029,Issaquah,Issaquah Highlands,47.559576,-122.005669,320
+98030,Kent,Kent Este,47.368948,-122.190221,253
+98031,Kent,Kent Norte,47.403797,-122.189336,271
+98032,Kent,Kent Valle,47.373497,-122.279081,123
+98033,Kirkland,Kirkland Centro / Houghton,47.680071,-122.187722,431
+98034,Kirkland,Kirkland Norte / Juanita,47.720731,-122.207324,543
+98038,Maple Valley,Maple Valley,47.370525,-122.031768,586
+98039,Medina,Medina,47.625698,-122.23349,49
+98040,Mercer Island,Mercer Island,47.55978,-122.225591,281
+98042,Kent,Kent Sureste / Covington,47.365707,-122.11544,546
+98045,North Bend,North Bend,47.473199,-121.759142,218
+98052,Redmond,Redmond,47.680589,-122.119152,571
+98053,Redmond,Redmond Este / Union Hill,47.680014,-122.022685,400
+98055,Renton,Renton Sur,47.458423,-122.202446,260
+98056,Renton,Renton Norte / Newcastle,47.509677,-122.182809,404
+98058,Renton,Renton Este / Fairwood,47.446027,-122.145902,451
+98059,Renton,Renton Noreste / East Renton Highlands,47.49282,-122.13912,465
+98065,Snoqualmie,Snoqualmie,47.531877,-121.86218,305
+98070,Vashon,Vashon Island,47.417446,-122.463595,116
+98072,Woodinville,Woodinville,47.750869,-122.131867,271
+98074,Sammamish,Sammamish Sur,47.62397,-122.044618,435
+98075,Sammamish,Sammamish Este,47.587484,-122.022441,358
+98077,Woodinville,Woodinville Norte,47.746015,-122.061026,196
+98092,Auburn,Auburn Este / Lea Hill,47.301836,-122.167997,351
+98102,Seattle,Eastlake / Capitol Hill Norte,47.634591,-122.32225,104
+98103,Seattle,Fremont / Wallingford / Green Lake,47.6761,-122.344142,598
+98105,Seattle,University District / Laurelhurst,47.665067,-122.294341,229
+98106,Seattle,Delridge / Highland Park,47.536412,-122.356782,330
+98107,Seattle,Ballard,47.669766,-122.375534,264
+98108,Seattle,Georgetown / South Beacon Hill,47.549804,-122.306946,185
+98109,Seattle,Queen Anne Este / South Lake Union,47.635602,-122.350092,109
+98112,Seattle,Capitol Hill / Madison Park,47.62963,-122.297873,268
+98115,Seattle,Ravenna / Wedgwood / View Ridge,47.685494,-122.301745,576
+98116,Seattle,West Seattle / Alki,47.573914,-122.393644,329
+98117,Seattle,Ballard Norte / Crown Hill,47.686899,-122.378516,548
+98118,Seattle,Columbia City / Seward Park,47.543768,-122.275578,498
+98119,Seattle,Queen Anne,47.640082,-122.366902,183
+98122,Seattle,Central District / Madrona,47.610173,-122.299735,287
+98125,Seattle,Lake City / Northgate,47.717109,-122.301303,402
+98126,Seattle,West Seattle / High Point,47.544694,-122.375276,352
+98133,Seattle,Bitter Lake / Broadview,47.735464,-122.343654,483
+98136,Seattle,West Seattle / Fauntleroy,47.538807,-122.388205,263
+98144,Seattle,Mount Baker / Beacon Hill,47.586302,-122.298418,337
+98146,Burien,White Center / Burien Norte,47.502192,-122.358612,281
+98148,Burien,Burien / SeaTac Oeste,47.437014,-122.329411,56
+98155,Shoreline,Shoreline / Lake Forest Park,47.755004,-122.303491,442
+98166,Burien,Burien / Normandy Park,47.455202,-122.350316,250
+98168,Tukwila,Tukwila / Boulevard Park,47.489705,-122.30775,264
+98177,Shoreline,Richmond Beach / Broadview Norte,47.742263,-122.369311,254
+98178,Seattle,Rainier Beach / Skyway,47.499265,-122.247109,258
+98188,SeaTac,SeaTac / Tukwila Sur,47.447292,-122.280933,135
+98198,Des Moines,Des Moines / SeaTac Sur,47.39063,-122.315873,275
+98199,Seattle,Magnolia,47.648081,-122.398467,315

@@ -1,0 +1,36 @@
+table correlaciones
+	lineageTag: 18556dfa-d4c8-4f0a-b2fb-6cd498a54ab6
+
+	column variable
+		dataType: string
+		lineageTag: 229e6536-823c-4387-bd5d-f86f342a71f3
+		summarizeBy: none
+		sourceColumn: variable
+
+		annotation SummarizationSetBy = Automatic
+
+	column correlacion_con_precio
+		dataType: double
+		formatString: 0.000
+		lineageTag: 778687d4-1158-422b-8a20-7fa51f9d1ca9
+		summarizeBy: none
+		sourceColumn: correlacion_con_precio
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition correlaciones = m
+		mode: import
+		source =
+				let
+				    Origen = Csv.Document(File.Contents(RutaSalida & "correlaciones.csv"),[Delimiter=",", Columns=2, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    #"Usar la primera fila como encabezado" = Table.PromoteHeaders(Origen, [PromoteAllScalars=true]),
+				    #"Cambiar tipo" = Table.TransformColumnTypes(#"Usar la primera fila como encabezado",{{"variable", type text}, {"correlacion_con_precio", type number}}, "en-US")
+				in
+				    #"Cambiar tipo"
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Table
+

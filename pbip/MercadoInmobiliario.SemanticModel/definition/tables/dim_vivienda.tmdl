@@ -1,0 +1,76 @@
+table dim_vivienda
+	lineageTag: 9bbead7d-43c7-4302-9094-e6c77817d84b
+
+	column id_vivienda
+		dataType: int64
+		formatString: 0
+		lineageTag: 743b5f2a-b793-443d-844a-5b7c78765b42
+		summarizeBy: none
+		sourceColumn: id_vivienda
+
+		annotation SummarizationSetBy = Automatic
+
+	column floors
+		dataType: double
+		lineageTag: 22c09d8d-3742-4ef0-af09-6c9e77f390df
+		summarizeBy: none
+		sourceColumn: floors
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column tiene_sotano
+		dataType: int64
+		formatString: 0
+		lineageTag: 3fde0d37-95e5-4db2-8b99-9b1066d724f7
+		summarizeBy: none
+		sourceColumn: tiene_sotano
+
+		annotation SummarizationSetBy = Automatic
+
+	column grade
+		dataType: int64
+		formatString: 0
+		lineageTag: 2411e018-fad1-430f-b52f-40a867d307a8
+		summarizeBy: none
+		sourceColumn: grade
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipo_vivienda
+		dataType: string
+		lineageTag: cae8a902-01b7-4f21-a2ed-79888f7d240c
+		summarizeBy: none
+		sourceColumn: tipo_vivienda
+
+		annotation SummarizationSetBy = Automatic
+
+	column categoria_calidad
+		dataType: string
+		lineageTag: 74164b15-be83-49a5-918c-458d45ff91ce
+		summarizeBy: none
+		sourceColumn: categoria_calidad
+		sortByColumn: 'Orden Calidad'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Orden Calidad' = SWITCH(TRUE(), dim_vivienda[grade] <= 6, 1, dim_vivienda[grade] <= 8, 2, dim_vivienda[grade] <= 10, 3, 4)
+		isHidden
+		lineageTag: 42a82301-eb9b-48e7-839d-f568cd3bc878
+		summarizeBy: none
+
+	partition dim_vivienda = m
+		mode: import
+		source =
+				let
+				    Origen = Csv.Document(File.Contents(RutaSalida & "dim_vivienda.csv"),[Delimiter=",", Columns=6, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    #"Usar la primera fila como encabezado" = Table.PromoteHeaders(Origen, [PromoteAllScalars=true]),
+				    #"Cambiar tipo" = Table.TransformColumnTypes(#"Usar la primera fila como encabezado",{{"id_vivienda", Int64.Type}, {"floors", type number}, {"tiene_sotano", Int64.Type}, {"grade", Int64.Type}, {"tipo_vivienda", type text}, {"categoria_calidad", type text}}, "en-US")
+				in
+				    #"Cambiar tipo"
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Table
+

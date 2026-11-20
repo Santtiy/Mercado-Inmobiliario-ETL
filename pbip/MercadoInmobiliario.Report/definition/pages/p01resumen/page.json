@@ -1,0 +1,15 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "p01resumen",
+  "displayName": "Resumen del mercado inmobiliario",
+  "displayOption": "FitToPage",
+  "height": 1080,
+  "width": 1920,
+  "visualInteractions": [
+    {
+      "source": "59068d8ab50b4cae85a3",
+      "target": "27f2806c372a48b1b9dc",
+      "type": "DataFilter"
+    }
+  ]
+}
